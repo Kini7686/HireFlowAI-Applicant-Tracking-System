@@ -150,7 +150,7 @@ flowchart TB
 1. **Clone the repository**
 
    ```bash
-   git clone <your-repo-url> hireflow-ai
+   git clone https://github.com/Kini7686/HireFlowAI-Applicant-Tracking-System
    cd hireflow-ai
    ```
 
