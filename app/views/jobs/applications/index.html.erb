@@ -1,0 +1,7 @@
+<%= render "shared/page_header",
+      title: "Applicants",
+      subtitle: @job.title,
+      actions: link_to("← Back to job", job_path(@job), class: btn_ghost) %>
+
+<%= turbo_stream_from "job_applications_#{@job.id}" %>
+<%= render "applications/list", applications: @applications, show_recalculate: true %>

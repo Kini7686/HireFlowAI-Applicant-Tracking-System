@@ -1,0 +1,38 @@
+<%= render "shared/page_header",
+      title: "Job openings",
+      subtitle: "Explore roles and apply with one click",
+      actions: (current_user&.recruiter? ? link_to("Post job", new_job_path, class: btn_primary) : nil) %>
+
+<% if @jobs.any? %>
+  <section class="grid gap-4 md:grid-cols-2">
+    <% @jobs.each do |job| %>
+      <article class="<%= card_classes %> p-6 flex flex-col hover:shadow-md hover:border-indigo-200 transition group">
+        <p class="flex items-start justify-between gap-2 mb-2">
+          <h2 class="text-lg font-bold text-slate-900 group-hover:text-indigo-600">
+            <%= link_to job.title, job, class: "hover:text-indigo-600" %>
+          </h2>
+          <span class="shrink-0 px-2.5 py-0.5 rounded-full text-xs font-semibold <%= job_status_color(job.status) %>"><%= job.status.humanize %></span>
+        </p>
+        <p class="text-sm text-slate-500 mb-3 flex flex-wrap gap-x-2">
+          <% if job.location.present? %><span>📍 <%= job.location %></span><% end %>
+          <% if job.employment_type.present? %><span>· <%= job.employment_type %></span><% end %>
+        </p>
+        <p class="text-sm text-slate-600 line-clamp-2 flex-grow"><%= truncate(job.description, length: 140) %></p>
+        <% if job.required_skills.present? %>
+          <p class="mt-3 flex flex-wrap gap-1">
+            <% job.required_skills_list.first(5).each do |skill| %>
+              <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded text-xs"><%= skill %></span>
+            <% end %>
+          </p>
+        <% end %>
+        <p class="mt-4 pt-4 border-t border-slate-100 text-sm font-medium text-indigo-600">
+          View details →
+        </p>
+      </article>
+    <% end %>
+  </section>
+<% else %>
+  <article class="<%= card_classes %> p-12 text-center">
+    <p class="text-slate-500">No jobs available right now.</p>
+  </article>
+<% end %>

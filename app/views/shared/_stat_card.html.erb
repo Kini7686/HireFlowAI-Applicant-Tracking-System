@@ -1,0 +1,7 @@
+<article class="<%= card_classes %> p-6 hover:shadow-md transition-shadow">
+  <p class="text-xs font-semibold uppercase tracking-wider text-slate-500"><%= label %></p>
+  <p class="mt-2 text-3xl font-bold <%= local_assigns[:value_class] || 'text-slate-900' %>"><%= value %></p>
+  <% if local_assigns[:hint] %>
+    <p class="mt-1 text-xs text-slate-400"><%= hint %></p>
+  <% end %>
+</article>

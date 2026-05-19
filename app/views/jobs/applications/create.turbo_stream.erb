@@ -1,0 +1,4 @@
+<%= turbo_stream.replace "job_apply_form" do %>
+  <%= render "jobs/apply_form", job: @job, application: @application %>
+<% end %>
+<%= turbo_stream.prepend "notifications_list", partial: "notifications/notification", locals: { notification: nil } if false %>

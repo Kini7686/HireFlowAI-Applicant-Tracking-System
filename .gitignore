@@ -1,0 +1,81 @@
+# See https://help.github.com/articles/ignoring-files for more about ignoring files.
+
+# --- Secrets & environment (never push) ---
+/.env
+/.env.*
+!/.env.example
+
+# Rails credentials decryption keys
+/config/master.key
+/config/credentials/*.key
+
+# --- Bundler / Ruby ---
+/.bundle
+/vendor/bundle
+*.gem
+
+# --- Logs & temp files ---
+/log/*
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+/tmp/pids/*
+!/tmp/pids/.keep
+
+/tmp/storage/*
+!/tmp/storage/.keep
+
+/tmp/cache
+/tmp/restart.txt
+*.log
+
+# --- Active Storage (uploaded resumes & attachments) ---
+/storage/*
+!/storage/.keep
+
+# --- Compiled / generated assets ---
+/public/assets
+/public/packs
+/public/packs-test
+/app/assets/builds/*
+!/app/assets/builds/.keep
+
+# --- Node (if used) ---
+/node_modules
+/yarn-error.log
+/package-lock.json
+
+# --- Testing ---
+/spec/examples.txt
+/spec/tmp
+/coverage
+
+# --- Debug & local tools ---
+.byebug_history
+/.ruby-lsp
+
+# --- OS junk ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# --- Editors / IDEs (optional local settings) ---
+/.idea
+/.vscode/*
+!/.vscode/extensions.json
+*.swp
+*.swo
+*~
+
+# --- Redis (local dump) ---
+dump.rdb
+
+# --- SQLite (not used, but safe default) ---
+*.sqlite3
+*.sqlite3-*

@@ -1,0 +1,19 @@
+<% status = profile&.processing_status || "pending" %>
+<p class="inline-flex items-center gap-2">
+  <span class="text-sm font-medium text-slate-600">Status</span>
+  <span class="px-3 py-1 rounded-full text-xs font-semibold
+    <%= case status
+        when "completed" then "bg-emerald-100 text-emerald-800"
+        when "failed" then "bg-red-100 text-red-800"
+        when "processing" then "bg-blue-100 text-blue-800"
+        else "bg-amber-100 text-amber-800"
+        end %>">
+    <%= status.humanize %>
+  </span>
+  <% if status == "processing" %>
+    <svg class="animate-spin h-4 w-4 text-blue-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+  <% end %>
+</p>
+<% if profile&.failed? %>
+  <p class="text-red-600 text-sm mt-2 rounded-lg bg-red-50 p-3 border border-red-100"><%= profile.error_message %></p>
+<% end %>

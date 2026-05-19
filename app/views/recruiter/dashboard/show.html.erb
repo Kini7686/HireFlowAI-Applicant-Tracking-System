@@ -1,0 +1,30 @@
+<%= render "shared/page_header",
+      title: "Recruiter Dashboard",
+      subtitle: "Manage postings and review applicants",
+      actions: safe_join([
+        link_to("View pipeline", recruiter_pipeline_index_path, class: btn_secondary),
+        link_to("Post new job", new_job_path, class: btn_primary)
+      ], " ") %>
+
+<section class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+  <%= render "shared/stat_card", label: "Active jobs", value: @jobs.count %>
+  <%= render "shared/stat_card", label: "Total applications", value: @applications_count, value_class: "text-indigo-600" %>
+  <%= render "shared/stat_card", label: "New applications", value: @pending_applications, value_class: "text-amber-600" %>
+</section>
+
+<% if @jobs.any? %>
+  <section>
+    <h2 class="text-lg font-bold text-slate-900 mb-4">Your recent jobs</h2>
+    <section class="grid gap-3">
+      <% @jobs.limit(5).each do |job| %>
+        <article class="<%= card_classes %> p-4 flex justify-between items-center hover:shadow-md transition">
+          <p>
+            <span class="font-semibold text-slate-900"><%= link_to job.title, job, class: "hover:text-indigo-600" %></span>
+            <span class="block text-sm text-slate-500 mt-0.5"><%= job.applications.count %> applicants</span>
+          </p>
+          <span class="px-2.5 py-1 rounded-full text-xs font-semibold <%= job_status_color(job.status) %>"><%= job.status.humanize %></span>
+        </article>
+      <% end %>
+    </section>
+  </section>
+<% end %>

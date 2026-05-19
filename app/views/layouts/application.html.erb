@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+  <head>
+    <title>HireFlow AI</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= action_cable_meta_tag %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: { sans: ['Inter', 'system-ui', 'sans-serif'] },
+            colors: {
+              brand: {
+                50: '#eef2ff', 100: '#e0e7ff', 500: '#6366f1',
+                600: '#4f46e5', 700: '#4338ca', 900: '#312e81'
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style type="text/tailwindcss">
+      @layer utilities {
+        .text-gradient {
+          @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-violet-600;
+        }
+      }
+    </style>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body class="min-h-full bg-slate-50 text-slate-900 font-sans antialiased">
+    <%= render "shared/navbar" %>
+    <%= render "shared/flash" %>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <%= yield %>
+    </main>
+    <footer class="border-t border-slate-200 bg-white mt-auto">
+      <div class="max-w-7xl mx-auto px-4 py-6 text-center text-sm text-slate-500">
+        HireFlow AI &mdash; Rails · Hotwire · Sidekiq · PostgreSQL
+      </div>
+    </footer>
+  </body>
+</html>

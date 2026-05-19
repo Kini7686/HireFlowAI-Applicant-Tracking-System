@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "application_row_#{@application.id}" do %>
+  <%= render "applications/application_row", application: @application, show_recalculate: true %>
+<% end %>
+
+<%= turbo_stream.replace "ats_score_#{@application.id}" do %>
+  <%= render "applications/ats_score", application: @application %>
+<% end %>

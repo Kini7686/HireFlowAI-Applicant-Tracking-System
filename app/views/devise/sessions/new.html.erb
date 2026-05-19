@@ -1,0 +1,27 @@
+<section class="max-w-md mx-auto">
+  <article class="<%= card_classes %> p-8 sm:p-10 shadow-lg">
+  <header class="text-center mb-8">
+    <span class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white text-lg font-bold mb-4">H</span>
+    <h1 class="text-2xl font-bold text-slate-900">Welcome back</h1>
+    <p class="text-slate-500 text-sm mt-1">Sign in to your HireFlow AI account</p>
+  </header>
+  <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "space-y-5" }) do |f| %>
+    <p>
+      <%= f.label :email, class: "block text-sm font-medium text-slate-700 mb-1" %>
+      <%= f.email_field :email, autofocus: true, class: input_classes, placeholder: "you@example.com" %>
+    </p>
+    <p>
+      <%= f.label :password, class: "block text-sm font-medium text-slate-700 mb-1" %>
+      <%= f.password_field :password, class: input_classes %>
+    </p>
+    <p class="flex items-center gap-2 text-sm">
+      <%= f.check_box :remember_me, class: "rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" %>
+      <%= f.label :remember_me, class: "text-slate-600" %>
+    </p>
+    <%= f.submit "Sign in", class: "#{btn_primary('w-full')}" %>
+  <% end %>
+  <p class="mt-6 text-center text-sm text-slate-500">
+    No account? <%= link_to "Sign up", new_user_registration_path, class: "font-semibold text-indigo-600 hover:text-indigo-800" %>
+  </p>
+  </article>
+</section>

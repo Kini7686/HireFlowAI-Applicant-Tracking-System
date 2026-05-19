@@ -1,0 +1,35 @@
+<section class="max-w-md mx-auto">
+  <article class="<%= card_classes %> p-8 sm:p-10 shadow-lg">
+  <header class="text-center mb-8">
+    <span class="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-600 to-violet-600 text-white text-lg font-bold mb-4">H</span>
+    <h1 class="text-2xl font-bold text-slate-900">Create account</h1>
+    <p class="text-slate-500 text-sm mt-1">Join as a candidate or recruiter</p>
+  </header>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "space-y-4" }) do |f| %>
+    <p>
+      <%= f.label :name, class: "block text-sm font-medium text-slate-700 mb-1" %>
+      <%= f.text_field :name, class: input_classes %>
+    </p>
+    <p>
+      <%= f.label :email, class: "block text-sm font-medium text-slate-700 mb-1" %>
+      <%= f.email_field :email, class: input_classes %>
+    </p>
+    <p>
+      <%= f.label :role, class: "block text-sm font-medium text-slate-700 mb-1" %>
+      <%= f.select :role, [["Candidate", "candidate"], ["Recruiter", "recruiter"]], {}, class: input_classes %>
+    </p>
+    <p>
+      <%= f.label :password, class: "block text-sm font-medium text-slate-700 mb-1" %>
+      <%= f.password_field :password, class: input_classes %>
+    </p>
+    <p>
+      <%= f.label :password_confirmation, class: "block text-sm font-medium text-slate-700 mb-1" %>
+      <%= f.password_field :password_confirmation, class: input_classes %>
+    </p>
+    <%= f.submit "Sign up", class: "#{btn_primary('w-full')}" %>
+  <% end %>
+  <p class="mt-6 text-center text-sm text-slate-500">
+    Already have an account? <%= link_to "Sign in", new_user_session_path, class: "font-semibold text-indigo-600 hover:text-indigo-800" %>
+  </p>
+  </article>
+</section>

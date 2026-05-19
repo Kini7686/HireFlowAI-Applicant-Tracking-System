@@ -1,0 +1,12 @@
+<%= render "shared/page_header", title: "Notifications", subtitle: "Stay updated on applications and scores" %>
+
+<%= button_to "Mark all as read", mark_all_read_notifications_path, method: :patch, class: "#{btn_secondary('mb-6')}" %>
+
+<%= turbo_stream_from "notifications_#{current_user.id}" %>
+<ul id="notifications_list" class="space-y-3">
+  <% if @notifications.any? %>
+    <%= render @notifications %>
+  <% else %>
+    <li class="<%= card_classes %> p-12 text-center text-slate-500">No notifications yet.</li>
+  <% end %>
+</ul>

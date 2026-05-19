@@ -1,0 +1,43 @@
+<section id="ats_score_<%= application.id %>" class="<%= card_classes %> p-6 sm:p-8">
+  <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-4">ATS match analysis</h2>
+
+  <% if application.ats_score %>
+    <p class="flex items-center gap-6 mb-6">
+      <span class="flex flex-col items-center justify-center w-24 h-24 rounded-full ring-8 <%= ats_score_bg(application.ats_score) %>">
+        <span class="text-3xl font-bold <%= ats_score_color(application.ats_score) %>"><%= application.ats_score %></span>
+        <span class="text-xs font-semibold uppercase text-slate-500">Score</span>
+      </span>
+      <span class="text-sm text-slate-600">Match based on skills, keywords, and experience.</span>
+    </p>
+    <section class="grid sm:grid-cols-2 gap-4 mb-4">
+      <article class="rounded-lg bg-emerald-50 border border-emerald-100 p-4">
+        <h3 class="text-xs font-semibold uppercase text-emerald-800 mb-1">Matched skills</h3>
+        <p class="text-sm text-emerald-900"><%= application.matched_skills.presence || "—" %></p>
+      </article>
+      <article class="rounded-lg bg-amber-50 border border-amber-100 p-4">
+        <h3 class="text-xs font-semibold uppercase text-amber-800 mb-1">Skills to highlight</h3>
+        <p class="text-sm text-amber-900"><%= application.missing_skills.presence || "—" %></p>
+      </article>
+    </section>
+    <% if application.ai_feedback.present? %>
+      <blockquote class="border-l-4 border-indigo-400 pl-4 text-slate-700 italic text-sm leading-relaxed">
+        <%= application.ai_feedback %>
+      </blockquote>
+    <% end %>
+  <% else %>
+    <p class="flex items-center gap-3 text-amber-600 font-medium">
+      <svg class="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+      ATS scoring in progress…
+    </p>
+  <% end %>
+
+  <% if local_assigns.fetch(:show_recalculate) { policy(application).recalculate_ats? } %>
+    <p class="mt-6 pt-6 border-t border-slate-100">
+      <%= button_to "Recalculate ATS score",
+            recalculate_ats_application_path(application),
+            method: :post,
+            class: btn_secondary,
+            data: { turbo_submits_with: "Recalculating…" } %>
+    </p>
+  <% end %>
+</section>

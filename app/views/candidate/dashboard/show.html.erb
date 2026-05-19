@@ -1,0 +1,32 @@
+<%= render "shared/page_header",
+      title: "Candidate Dashboard",
+      subtitle: "Track applications and resume parsing status" %>
+
+<section class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+  <article class="<%= card_classes %> p-6">
+    <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-3">Resume status</h2>
+    <%= turbo_stream_from "resume_profile_#{current_user.id}" %>
+    <%= render "resumes/processing_status", profile: @profile %>
+    <%= link_to "Manage resume →", resume_path, class: "#{btn_ghost('mt-4')}" %>
+  </article>
+  <article class="<%= card_classes %> p-6">
+    <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-3">Quick actions</h2>
+    <p class="flex flex-col gap-3">
+      <%= link_to "Upload resume", resume_path, class: btn_primary("!justify-start") %>
+      <%= link_to "Browse jobs", jobs_path, class: btn_secondary("!justify-start") %>
+    </p>
+  </article>
+</section>
+
+<section>
+  <h2 class="text-lg font-bold text-slate-900 mb-4">My applications</h2>
+  <%= turbo_stream_from "candidate_applications_#{current_user.id}" %>
+  <% if @applications.any? %>
+    <%= render "applications/list", applications: @applications %>
+  <% else %>
+    <article class="<%= card_classes %> p-12 text-center">
+      <p class="text-slate-500 mb-4">You have not applied to any jobs yet.</p>
+      <%= link_to "Find jobs", jobs_path, class: btn_primary %>
+    </article>
+  <% end %>
+</section>

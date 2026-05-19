@@ -1,0 +1,47 @@
+<%= link_to "← Back to jobs", jobs_path, class: "#{btn_ghost('mb-6 inline-flex')}" %>
+
+<article class="<%= card_classes %> overflow-hidden">
+  <header class="bg-gradient-to-r from-slate-50 to-indigo-50 border-b border-slate-200 px-6 py-8 sm:px-8">
+    <p class="flex flex-wrap items-center gap-2 mb-2">
+      <span class="px-2.5 py-1 rounded-full text-xs font-semibold <%= job_status_color(@job.status) %>"><%= @job.status.humanize %></span>
+      <% if @job.employment_type.present? %><span class="text-sm text-slate-500"><%= @job.employment_type %></span><% end %>
+    </p>
+    <h1 class="text-2xl sm:text-3xl font-bold text-slate-900"><%= @job.title %></h1>
+    <p class="mt-2 text-slate-500 text-sm">
+      <% if @job.location.present? %>📍 <%= @job.location %> · <% end %>
+      <%= @job.min_experience %>+ years · <%= @job.salary_range %>
+    </p>
+  </header>
+
+  <section class="px-6 py-6 sm:px-8 space-y-6">
+    <section>
+      <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-2">Description</h2>
+      <p class="text-slate-700 whitespace-pre-wrap leading-relaxed"><%= @job.description %></p>
+    </section>
+    <% if @job.required_skills.present? %>
+      <section>
+        <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500 mb-2">Required skills</h2>
+        <p class="flex flex-wrap gap-2">
+          <% @job.required_skills_list.each do |skill| %>
+            <span class="px-3 py-1 bg-indigo-50 text-indigo-800 rounded-full text-sm font-medium"><%= skill %></span>
+          <% end %>
+        </p>
+      </section>
+    <% end %>
+
+    <% if current_user&.recruiter? && @job.recruiter_id == current_user.id %>
+      <p class="flex gap-3 pt-4 border-t border-slate-100">
+        <%= link_to "Edit job", edit_job_path(@job), class: btn_secondary %>
+        <%= link_to "View applicants", job_applications_path(@job), class: btn_primary %>
+      </p>
+    <% end %>
+
+    <% if current_user&.candidate? && @job.published? %>
+      <section class="pt-4 border-t border-slate-100">
+        <%= turbo_frame_tag "job_apply_form" do %>
+          <%= render "jobs/apply_form", job: @job, application: @application || Application.new %>
+        <% end %>
+      </section>
+    <% end %>
+  </section>
+</article>

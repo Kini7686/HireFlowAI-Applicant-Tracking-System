@@ -1,0 +1,21 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: <%= ENV.fetch("DATABASE_HOST", "localhost") %>
+  username: <%= ENV.fetch("DATABASE_USERNAME", "hireflow") %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD", "hireflow") %>
+  port: <%= ENV.fetch("DATABASE_PORT", "5432") %>
+
+development:
+  <<: *default
+  database: hireflow_ai_development
+
+test:
+  <<: *default
+  database: hireflow_ai_test
+
+production:
+  <<: *default
+  database: hireflow_ai_production
+  url: <%= ENV["DATABASE_URL"] %>

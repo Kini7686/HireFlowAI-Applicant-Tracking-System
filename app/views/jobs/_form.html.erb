@@ -1,0 +1,49 @@
+<article class="<%= card_classes %> p-6 sm:p-8 max-w-2xl">
+  <%= form_with model: @job, class: "space-y-5", data: { controller: "skill-tags" } do |f| %>
+    <% if @job.errors.any? %>
+      <aside class="rounded-lg bg-red-50 border border-red-200 p-4 text-sm text-red-800">
+        <ul class="list-disc list-inside"><% @job.errors.full_messages.each do |m| %><li><%= m %></li><% end %></ul>
+      </aside>
+    <% end %>
+    <p>
+      <%= f.label :title, class: "block text-sm font-medium text-slate-700 mb-1" %>
+      <%= f.text_field :title, class: input_classes %>
+    </p>
+    <p>
+      <%= f.label :description, class: "block text-sm font-medium text-slate-700 mb-1" %>
+      <%= f.text_area :description, rows: 6, class: input_classes %>
+    </p>
+    <p>
+      <%= f.label :required_skills, "Required skills (comma-separated)", class: "block text-sm font-medium text-slate-700 mb-1" %>
+      <%= f.text_field :required_skills, class: input_classes, placeholder: "ruby, rails, postgresql", data: { skill_tags_target: "input" } %>
+    </p>
+    <section class="grid sm:grid-cols-2 gap-4">
+      <p>
+        <%= f.label :location, class: "block text-sm font-medium text-slate-700 mb-1" %>
+        <%= f.text_field :location, class: input_classes, placeholder: "Remote" %>
+      </p>
+      <p>
+        <%= f.label :employment_type, class: "block text-sm font-medium text-slate-700 mb-1" %>
+        <%= f.text_field :employment_type, class: input_classes, placeholder: "Full-time" %>
+      </p>
+    </section>
+    <section class="grid sm:grid-cols-2 gap-4">
+      <p>
+        <%= f.label :min_experience, class: "block text-sm font-medium text-slate-700 mb-1" %>
+        <%= f.number_field :min_experience, class: input_classes, min: 0 %>
+      </p>
+      <p>
+        <%= f.label :salary_range, class: "block text-sm font-medium text-slate-700 mb-1" %>
+        <%= f.text_field :salary_range, class: input_classes, placeholder: "$90k–$120k" %>
+      </p>
+    </section>
+    <p>
+      <%= f.label :status, class: "block text-sm font-medium text-slate-700 mb-1" %>
+      <%= f.select :status, Job.statuses.keys.map { |s| [s.humanize, s] }, {}, class: input_classes %>
+    </p>
+    <p class="flex gap-3 pt-2">
+      <%= f.submit class: btn_primary %>
+      <%= link_to "Cancel", jobs_path, class: btn_secondary %>
+    </p>
+  <% end %>
+</article>

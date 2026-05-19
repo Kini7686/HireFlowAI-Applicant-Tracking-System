@@ -1,0 +1,13 @@
+<%= render "shared/page_header",
+      title: "Admin Dashboard",
+      subtitle: "System-wide metrics and health" %>
+
+<%= turbo_stream_from "admin_dashboard" %>
+<section class="grid grid-cols-2 lg:grid-cols-4 gap-4" id="admin_stats">
+  <% @stats.each do |label, value| %>
+    <%= render "shared/stat_card",
+          label: label.to_s.humanize,
+          value: value,
+          value_class: label == :average_ats_score ? "text-indigo-600" : (label == :failed_resume_parses && value.to_i > 0 ? "text-red-600" : "text-slate-900") %>
+  <% end %>
+</section>

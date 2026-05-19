@@ -1,0 +1,6 @@
+<%= turbo_stream.replace "application_status_#{@application.id}" do %>
+  <%= render "applications/status_badge", application: @application %>
+<% end %>
+<%= turbo_stream.replace "ats_score_#{@application.id}" do %>
+  <%= render "applications/ats_score", application: @application %>
+<% end %>

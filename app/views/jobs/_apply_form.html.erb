@@ -1,0 +1,17 @@
+<% if application&.persisted? %>
+  <aside class="<%= card_classes %> p-4 bg-emerald-50 border-emerald-200">
+    <p class="font-semibold text-emerald-800">✓ You have already applied</p>
+    <%= link_to "View your application", application_path(application), class: "#{btn_ghost('mt-2')}" %>
+  </aside>
+<% else %>
+  <aside class="<%= card_classes %> p-6 bg-indigo-50/50 border-indigo-100">
+    <h3 class="font-semibold text-slate-900 mb-2">Ready to apply?</h3>
+    <p class="text-sm text-slate-600 mb-4">Submit your profile for ATS scoring against this role.</p>
+    <%= form_with url: job_applications_path(job), method: :post do %>
+      <%= button_tag "Apply now", class: "#{btn_primary('w-full sm:w-auto')}" %>
+    <% end %>
+    <% if application&.errors&.any? %>
+      <p class="text-red-600 text-sm mt-2"><%= application.errors.full_messages.to_sentence %></p>
+    <% end %>
+  </aside>
+<% end %>

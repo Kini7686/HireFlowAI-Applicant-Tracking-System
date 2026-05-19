@@ -1,0 +1,14 @@
+<% if applications.any? %>
+  <section class="grid gap-3">
+    <%= render partial: "applications/application_row",
+               collection: applications,
+               as: :application,
+               locals: local_assigns.slice(:show_recalculate) %>
+  </section>
+<% else %>
+  <article class="<%= card_classes %> p-12 text-center">
+    <p class="text-4xl mb-3" aria-hidden="true">📋</p>
+    <p class="font-semibold text-slate-900">No applications yet</p>
+    <p class="text-sm text-slate-500 mt-1">Applications will appear here once candidates apply.</p>
+  </article>
+<% end %>

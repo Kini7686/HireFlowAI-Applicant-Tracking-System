@@ -1,0 +1,37 @@
+<article id="application_row_<%= application.id %>"
+         class="<%= card_classes %> p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 hover:shadow-md transition"
+         <% if application.ats_score.blank? %>
+         data-controller="ats-poll"
+         data-ats-poll-url-value="<%= ats_status_application_path(application, include_row: true) %>"
+         data-ats-poll-interval-value="2000"
+         <% end %>>
+  <p class="min-w-0 flex-1">
+    <span class="font-semibold text-slate-900 block truncate">
+      <%= link_to application.job.title, application_path(application), class: "hover:text-indigo-600" %>
+    </span>
+    <span class="inline-flex mt-2 px-2.5 py-0.5 rounded-full text-xs font-semibold ring-1 ring-inset <%= application_status_color(application.status) %>">
+      <%= application.status.humanize %>
+    </span>
+  </p>
+  <p class="flex items-center gap-4 shrink-0">
+    <% if application.ats_score %>
+      <span class="flex flex-col items-center justify-center w-16 h-16 rounded-full ring-4 <%= ats_score_bg(application.ats_score) %>">
+        <span class="text-lg font-bold <%= ats_score_color(application.ats_score) %>"><%= application.ats_score.to_i == application.ats_score ? application.ats_score.to_i : application.ats_score %></span>
+        <span class="text-[10px] font-semibold uppercase text-slate-500">ATS</span>
+      </span>
+    <% else %>
+      <span class="flex items-center gap-2 text-amber-600 text-sm font-medium">
+        <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+        Scoring…
+      </span>
+    <% end %>
+    <% if local_assigns.fetch(:show_recalculate) { policy(application).recalculate_ats? } %>
+      <%= button_to "Recalculate",
+            recalculate_ats_application_path(application),
+            method: :post,
+            class: "text-xs font-semibold text-indigo-600 hover:text-indigo-800 underline-offset-2 hover:underline",
+            form: { data: { turbo_stream: true } },
+            data: { turbo_submits_with: "Scoring…" } %>
+    <% end %>
+  </p>
+</article>
